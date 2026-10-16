@@ -1,15 +1,22 @@
-# Reproduction of the accepted V3 snapshot
+# Reproducing the saved results
 
-The checked-in aggregate tables and reports are the accepted, frozen V3 results. Source data, fitted objects, row-level forecasts, bootstrap arrays and repetition-level simulation draws are excluded. Data access and attribution remain in DATA.md; MIT applies to original code, not source data.
+The public repository contains aggregate tables, figures and reports. Raw observations, fitted objects, bootstrap arrays and repetition-level checkpoints are excluded. [DATA.md](../DATA.md) describes access and source terms.
 
-## Rebuild and tests from a clean clone
+## Checks and report builds
 
-Install Python 3.11, uv and R for C1. `make setup test lint quick` installs only repository-local dependencies and checks implementations with synthetic fixtures; the R test uses its own temporary 100-repetition fixture, not another V3 precision run. Install Tectonic locally or set `TECTONIC=/path/to/tectonic`; `make policy-note report` rebuilds the current notes and working paper from included aggregate tables, with no data download, refitting or credentials. Working-paper equations are tied to implementation hashes. The supplied frozen V2 aggregate fixtures support regression tests and comparisons; they contain no private rows or history.
+Python 3.11 and uv are needed for checks; Tectonic is needed for PDF compilation.
 
-## Acquisition and empirical reruns
+```sh
+make setup
+make test lint quick
+```
 
-`make all` remains the original pre-V3 empirical reproduction pipeline. M1 acquires official sources with the reader's own ignored `.env` (FRED_API_KEY, EVDS_API_KEY); C1 fetches the public SIPP extract and did example for permitted private analysis. It writes private data/runs and replaces aggregate outputs in that working checkout. It is not an exact reconstruction of the approved V3 private-artifact history: new source vintages may differ, and the original 1,000-repetition continuation reused private repetition-level checkpoints. Run it in a separate clone; do not describe its legacy 100-repetition results as V3. Archive the supplied aggregates before any empirical rerun.
+The quick example is synthetic. With Tectonic installed and its TeX cache populated, `REPORT_OFFLINE=1 make report` builds the technical paper from saved aggregates. `make policy-note` also rebuilds the short note, but its presentation script regenerates this README, figures and summary files from the older embedded template. Run presentation rebuilds in a separate clone to retain the current editorial text. The same side effect applies to `make figures`, `make readme-numbers` and `make v3-outputs`.
 
-V3 methods and diagnostic source code is included. M1 `make v3-methods` requires a locally acquired panel and the exact, permitted EA-MPD workbook with the documented frozen hash; a refreshed workbook is not silently substituted. `make v3-diagnostics` in C1 requires runtime SIPP data; balanced influence-function checks require the local fitted did object. The consumed MC manifests intentionally prevent an accidental second precision budget. Reconstructing those private checkpoint histories is outside the self-contained aggregate report build; no private checkpoints are redistributed. V3 protocols retain all specifications, dates, availability assumptions, seeds and fixed budgets.
+## Empirical reruns
 
-The public code/figures/aggregate results were synchronized from approved local source commits, not by merging private research Git history. Publication metadata explains small documentation-only differences. No learner, instrument, lag search or causal estimand was changed for publication.
+The original acquisition pipeline uses official sources and a local ignored `.env` with FRED_API_KEY and EVDS_API_KEY. `make v3-methods` needs the locally acquired panel and the exact EA-MPD workbook identified by its frozen hash. Refreshed observations or a different workbook are not equivalent inputs.
+
+The original `make all` pipeline predates the final extensions. It overwrites aggregate outputs and is not a self-contained reconstruction of the final private checkpoint history. The dated protocols retain the exact specifications, seeds and execution budgets; a new source vintage need not reproduce the saved estimates. Use a separate clone for reruns.
+
+The public snapshot was exported from local source commits without merging the private research history. Publication did not change learners, identification assumptions or causal estimands.

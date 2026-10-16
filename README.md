@@ -1,49 +1,40 @@
-# macro-var-lab
+# Monetary-policy transmission in the euro area and Türkiye
 
-How do monetary-response estimates for the euro area and Türkiye depend on the shock-identification scheme and response estimator?
+I study how estimated responses to monetary tightening change with the identification method and the response estimator. I assembled official monthly series, implemented VAR and local-projection comparisons, and traced the estimates back to their data and specifications.
 
-![Headline](figures/headline.png)
+![Monetary-policy response estimates](figures/headline.png)
 
-## Findings
+## The comparison I built
 
-- The euro appreciates after a tightening: the proxy estimate at month 12 is 4.551 log percent with p = 3 (1.889, 7.630) and 3.305 with p = 7 (0.648, 5.505); both conditional 90% bands exclude zero.
-- The price response is uncertain: proxy estimates at month 12 are 0.172 and -0.078 log percent, with both bands including zero. Estimates also change sign across methods.
-- For Türkiye, the recursive price estimate at month 12 is -0.288 log percent. Recursive, FX-first and recursive-shock local-projection point estimates are negative, but their bands include zero.
+I compare recursive VARs, sign restrictions, recursive-shock local projections and a proxy VAR on a common euro-area sample, April 2005–October 2025. Within p = 3 and p = 7 specifications, I hold variables, transformations, deterministic terms and the 100-basis-point shock constant. The Türkiye analysis compares three specifications and treats shorter regimes separately.
 
-## Method
+I report sign-admissible ranges separately from statistical confidence bands. Proxy estimates remain conditional on instrument validity.
 
-We compare recursive VAR, sign-restricted VAR, recursive-shock local projections and proxy VAR on a common euro-area sample, April 2005 to October 2025. Within each of two fixed lag panels, p = 3 and p = 7, we hold variables, transformations, deterministic terms and shock size constant and trace a 100-basis-point tightening over 36 months. We use bootstrap bands for VAR responses, HAC bands for local projections and separately labelled sign-admissible ranges. We also compare three Türkiye specifications and interpret proxy estimates conditional on instrument validity.
+## What I found
 
-## Data sources
+- The euro appreciates after tightening. At month 12, the proxy estimate is 4.551 log percent for p = 3 (1.889, 7.630) and 3.305 for p = 7 (0.648, 5.505); both conditional 90% bands exclude zero.
+- The price response is uncertain. The corresponding estimates are 0.172 and -0.078 log percent, with bands including zero; the sign also changes across methods.
+- For Türkiye, the recursive month-12 price estimate is -0.288 log percent. The recursive, FX-first and recursive-shock local-projection estimates are negative, but their bands include zero.
 
-ECB yields, Eurostat production/prices, CBRT/EVDS and TURKSTAT Türkiye series, FRED global controls, and EA-MPD policy-event surprises. [DATA.md](DATA.md) lists exact IDs, transformations, attribution and terms. Source observations are acquired through scripts and are not redistributed.
+Both common-sample euro-area VARs have slightly unstable dynamics. Longer-horizon local projections have fewer observations, and latest-vintage data do not reconstruct what was known in real time. These limits matter for interpreting the response paths.
 
-## How to reproduce
+## Read the analysis
 
-Requirements: Python 3.11, uv and Tectonic. Dependencies install inside the repository.
+[Policy note](report/policy_note.pdf) · [Technical working paper](report/technical_report.pdf) · [Detailed results](report/report.md) · [Methods guide](docs/METHODS.md)
+
+Data come from the ECB, Eurostat, CBRT/EVDS, TURKSTAT, FRED and EA-MPD. [DATA.md](DATA.md) records series IDs, transformations and source terms. Source observations are acquired separately and are not redistributed.
+
+## Working with the repository
+
+Python 3.11 and uv are required for the code checks:
 
 ```sh
 make setup
 make test lint quick
-make policy-note report
 ```
 
-The last command rebuilds the notes and working paper from included aggregate results, without data acquisition or model fitting. `make quick` is offline and synthetic. Empirical acquisition/rerun commands, required credentials and source-vintage constraints are documented in [provenance and reproduction](docs/PROVENANCE.md).
+`quick` uses synthetic data. The PDFs and aggregate results can be read directly. [Reproduction notes](docs/REPRODUCTION.md) explain report rebuilding, the frozen-input requirements for empirical reruns, and which commands regenerate presentation files, including this README.
 
-## Reports
+Original code: [MIT](LICENSE). Data retain their source terms.
 
-[Two-page policy note](report/policy_note.pdf) · [Technical working paper](report/technical_report.pdf) · [Detailed results](report/report.md)
-
-## Limitations
-
-- Proxy exogeneity is assumed; its bands condition on fitted dynamics.
-- Sign-admissible ranges are not statistical confidence intervals.
-- Both common-sample VARs have slightly unstable dynamics.
-- Local projections have fewer supported origins at longer horizons.
-- Latest-vintage observations do not reconstruct real-time information.
-
-## Licence
-
-Original code: [MIT](LICENSE). Third-party data retain their source terms and are not included.
-
-Hakan Zeki Gülmez · [GitHub](https://github.com/hakangulmez) · [LinkedIn](https://www.linkedin.com/in/hakan-zeki-g%C3%BClmez-088700180/)
+Hakan Zeki Gülmez · [Portfolio](https://hakangulmez.github.io/) · [GitHub](https://github.com/hakangulmez)
